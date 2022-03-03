@@ -2,10 +2,10 @@ import React, { useMemo } from 'react'
 import type { ProductTypes } from 'vtex.product-context'
 import { useProduct } from 'vtex.product-context'
 import { withToast } from 'vtex.styleguide'
+
 import AddToCartButton from './AddToCartButton'
 import { AssemblyOptions } from './modules/assemblyOptions'
 import { CartItem, mapCatalogItemToCart } from './modules/catalogItemToCart'
-
 
 interface Props {
   isOneClickBuy: boolean

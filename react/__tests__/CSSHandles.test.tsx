@@ -8,6 +8,8 @@ const CSS_HANDLES_API = [
   'buttonText',
   'buttonDataContainer',
   'tooltipLabelText',
+  'addToCartOutlined',
+  'addToCartFilled',
 ]
 
 /**
@@ -24,9 +26,11 @@ describe('CSS handles API', () => {
         available
         disabled={false}
         skuItems={[]}
-        customToastUrl={''}
+        customToastUrl=""
         showToast={() => {}}
         allSkuVariationsSelected={false}
+        goToProductPageText=""
+        multipleAvailableSKUs
       />
     )
 
