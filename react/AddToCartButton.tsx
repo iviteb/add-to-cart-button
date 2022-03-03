@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 import {
-  defineMessages, FormattedMessage,
+  defineMessages,
+  FormattedMessage,
   MessageDescriptor,
-  useIntl
+  useIntl,
 } from 'react-intl'
 import { Utils } from 'vtex.checkout-resources'
 import { useCssHandles } from 'vtex.css-handles'
@@ -12,9 +13,9 @@ import { useProductDispatch } from 'vtex.product-context'
 import { useRuntime } from 'vtex.render-runtime'
 import { usePWA } from 'vtex.store-resources/PWAContext'
 import { Button, Tooltip } from 'vtex.styleguide'
+
 import useMarketingSessionParams from './hooks/useMarketingSessionParams'
 import { CartItem } from './modules/catalogItemToCart'
-
 
 interface ProductLink {
   linkText?: string
@@ -53,6 +54,8 @@ const CSS_HANDLES = [
   'buttonText',
   'buttonDataContainer',
   'tooltipLabelText',
+  'addToCartOutlined',
+  'addToCartFilled',
 ] as const
 
 const messages = defineMessages({
@@ -143,7 +146,8 @@ function AddToCartButton(props: Props) {
   const shouldNavigateToProductPage =
     onClickBehavior === 'go-to-product-page' ||
     (onClickBehavior === 'ensure-sku-selection' && multipleAvailableSKUs)
-  const canNavigateToProductPage = productLinkIsValid && shouldNavigateToProductPage
+  const canNavigateToProductPage =
+    productLinkIsValid && shouldNavigateToProductPage
   const translateMessage = (message: MessageDescriptor) =>
     intl.formatMessage(message)
 
@@ -272,7 +276,7 @@ function AddToCartButton(props: Props) {
     <div className={`${handles.buttonDataContainer} flex justify-center`}>
       {text ? (
         <span className={handles.buttonText}>{text}</span>
-      ) : (canNavigateToProductPage && goToProductPageText) ? (
+      ) : canNavigateToProductPage && goToProductPageText ? (
         <span className={handles.buttonText}>{goToProductPageText}</span>
       ) : (
         <FormattedMessage id="store/add-to-cart.add-to-cart">
@@ -297,14 +301,22 @@ function AddToCartButton(props: Props) {
   )
 
   const ButtonWithLabel = (
-    <Button
-      block
-      isLoading={isFakeLoading || isLoading}
-      disabled={disabled || !available}
-      onClick={handleClick}
+    <div
+      className={
+        multipleAvailableSKUs
+          ? handles.addToCartOutlined
+          : handles.addToCartFilled
+      }
     >
-      {available ? availableButtonContent : unavailableButtonContent}
-    </Button>
+      <Button
+        block
+        isLoading={isFakeLoading || isLoading}
+        disabled={disabled || !available}
+        onClick={handleClick}
+      >
+        {available ? availableButtonContent : unavailableButtonContent}
+      </Button>
+    </div>
   )
 
   return allSkuVariationsSelected ? (
