@@ -254,7 +254,10 @@ function AddToCartButton(props: Props) {
       })
     }
 
-    if (onClickEventPropagation === 'disabled') {
+    if (
+      onClickEventPropagation === 'disabled' ||
+      (onClickEventPropagation === 'enabled' && !allSkuVariationsSelected)
+    ) {
       e.preventDefault()
       e.stopPropagation()
     }
